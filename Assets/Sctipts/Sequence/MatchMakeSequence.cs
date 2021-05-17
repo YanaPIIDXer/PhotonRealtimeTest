@@ -4,6 +4,8 @@ using UnityEngine;
 using Photon.Realtime;
 using Game.Network;
 using Game.UI;
+using UniRx;
+using System;
 
 namespace Game.Sequence
 {
@@ -16,6 +18,8 @@ namespace Game.Sequence
         {
             ConnectionCore.Instance.AddCallbackTarget(this);
             var Handler = UIManager.Instance.Show<MatchMakeInterface>("MatchMakeInterface");
+            Handler.Instance.OnCreateRoom
+                .Subscribe((RoomName) => ConnectionCore.Instance.CreateRoom(RoomName, 2));
         }
 
         void OnDestroy()
