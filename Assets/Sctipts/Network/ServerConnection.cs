@@ -29,9 +29,24 @@ namespace Game.Network
         }
         private static ServerConnection _Instance = null;
 
+        /// <summary>
+        /// クライアント
+        /// </summary>
+        private LoadBalancingClient Client = new LoadBalancingClient();
+
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
+            Client.AddCallbackTarget(this);
+            Client.AddCallbackTarget(GetComponent<LobbyEventListener>());
+            Client.AddCallbackTarget(GetComponent<RoomEventListener>());
+        }
+
+        void OnDestroy()
+        {
+            Client.RemoveCallbackTarget(this);
+            Client.RemoveCallbackTarget(GetComponent<LobbyEventListener>());
+            Client.RemoveCallbackTarget(GetComponent<RoomEventListener>());
         }
 
         public void OnConnected()
