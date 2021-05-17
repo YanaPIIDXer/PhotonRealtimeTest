@@ -6,11 +6,13 @@ using Game.Network;
 using Game.UI;
 using UniRx;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace Game.Sequence
 {
     /// <summary>
     /// マッチメイクシーケンス
+    /// TODO:多分こいつにIMatchmakingCallbacksを実装するのは違う
     /// </summary>
     public class MatchMakeSequence : MonoBehaviour, IMatchmakingCallbacks
     {
@@ -47,6 +49,7 @@ namespace Game.Sequence
         public void OnJoinedRoom()
         {
             Debug.Log("OnJoinedRoom()");
+            SceneManager.LoadScene("Game");
         }
 
         public void OnJoinRandomFailed(short returnCode, string message)

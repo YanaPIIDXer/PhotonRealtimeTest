@@ -6,6 +6,7 @@ using Photon.Realtime;
 using Game.Enviroment;
 using UniRx;
 using System;
+using ExitGames.Client.Photon;
 
 namespace Game.Network
 {
@@ -121,6 +122,19 @@ namespace Game.Network
             Param.RoomOptions = new RoomOptions();
             Param.RoomOptions.MaxPlayers = MaxPlayers;
             Client.OpCreateRoom(Param);
+        }
+
+        /// <summary>
+        /// ゲーム中のイベント送信
+        /// ※多分これPhotonServerと同じような仕組みなんじゃないかな・・・？
+        /// 　だとすればPhotonServerTestで使ってるパケットが丸々使えることになるが。
+        /// 　そうなったらこのメソッドはリストラになる
+        /// </summary>
+        /// <param name="Code">コード</param>
+        /// <param name="Params">パラメータ</param>
+        public void SendEvent(byte Code, Dictionary<byte, object> Params)
+        {
+            Client.OpRaiseEvent(Code, Params, RaiseEventOptions.Default, new SendOptions());
         }
 
         /// <summary>
