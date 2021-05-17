@@ -110,6 +110,20 @@ namespace Game.Network
         }
 
         /// <summary>
+        /// ルームを作成
+        /// </summary>
+        /// <param name="RoomName">ルーム名</param>
+        /// <param name="MaxPlayers">最大プレイヤー数</param>
+        public void CreateRoom(string RoomName, byte MaxPlayers)
+        {
+            EnterRoomParams Param = new EnterRoomParams();
+            Param.RoomName = RoomName;
+            Param.RoomOptions = new RoomOptions();
+            Param.RoomOptions.MaxPlayers = MaxPlayers;
+            Client.OpCreateRoom(Param);
+        }
+
+        /// <summary>
         /// クライアントの状態が遷移した
         /// </summary>
         /// <param name="Prev">前</param>
