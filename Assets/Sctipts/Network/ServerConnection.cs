@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.System;
+using Photon.Realtime;
 
 namespace Game.Network
 {
@@ -10,7 +11,7 @@ namespace Game.Network
     /// </summary>
     [RequireComponent(typeof(LobbyEventListener))]
     [RequireComponent(typeof(RoomEventListener))]
-    public class ServerConnection : MonoBehaviour
+    public class ServerConnection : MonoBehaviour, IConnectionCallbacks
     {
         /// <summary>
         /// インスタンス
@@ -31,6 +32,30 @@ namespace Game.Network
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
+        }
+
+        public void OnConnected()
+        {
+        }
+
+        public void OnConnectedToMaster()
+        {
+        }
+
+        public void OnDisconnected(DisconnectCause cause)
+        {
+        }
+
+        public void OnRegionListReceived(RegionHandler regionHandler)
+        {
+        }
+
+        public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
+        {
+        }
+
+        public void OnCustomAuthenticationFailed(string debugMessage)
+        {
         }
     }
 }
