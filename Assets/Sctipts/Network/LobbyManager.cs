@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Game.System;
+using UniRx;
+using System;
 
 namespace Game.Network
 {
@@ -36,6 +38,17 @@ namespace Game.Network
 
         #endregion
 
+        /// <summary>
+        /// ルームリスト更新時Subject
+        /// </summary>
+        private Subject<List<RoomInfo>> RoomListUpdatedSubject = new Subject<List<RoomInfo>>();
+
+        /// <summary>
+        /// ルームリストが更新された
+        /// </summary>
+        /// <value></value>
+        public IObservable<List<RoomInfo>> RoomLIstUpdated { get { return RoomListUpdatedSubject; } }
+
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -55,6 +68,7 @@ namespace Game.Network
 
         public void OnRoomListUpdate(List<RoomInfo> roomList)
         {
+            RoomListUpdatedSubject.OnNext(roomList);
         }
     }
 }

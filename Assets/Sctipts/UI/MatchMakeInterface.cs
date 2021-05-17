@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UniRx;
 using System;
 using UniRx.Operators;
+using Game.Network;
 
 namespace Game.UI
 {
@@ -31,6 +32,18 @@ namespace Game.UI
         private Button CreateRoomButton = null;
 
         /// <summary>
+        /// ルームリストのドロップダウン
+        /// </summary>
+        [SerializeField]
+        private Dropdown RoomListDropdown = null;
+
+        /// <summary>
+        /// ルーム参加ボタン
+        /// </summary>
+        [SerializeField]
+        private Button JoinRoomButton = null;
+
+        /// <summary>
         /// ルーム作成ボタンを押した
         /// </summary>
         public IObservable<string> OnCreateRoom
@@ -42,12 +55,42 @@ namespace Game.UI
             }
         }
 
+        /// <summary>
+        /// ルームに参加した
+        /// </summary>
+        public IObservable<string> OnJoinRoom
+        {
+            get
+            {
+                return JoinRoomButton.OnClickAsObservable()
+                    .Select((_) => RoomListDropdown.options[RoomListDropdown.value].text);
+            }
+        }
+
         void Awake()
         {
             RoomNameInputField.OnValueChangedAsObservable()
                 .Select((Value) => string.IsNullOrEmpty(Value))
                 .Subscribe((IsEmpty) => CreateRoomButton.interactable = !IsEmpty)
                 .AddTo(gameObject);
+
+            LobbyManager.Instance.RoomLIstUpdated
+                .Select((Rooms) => Rooms.Count > 0)
+                .Subscribe((HasRoom) =>
+                {
+                    RoomListDropdown.interactable = HasRoom;
+                    JoinRoomButton.interactable = HasRoom;
+                });
+
+            LobbyManager.Instance.RoomLIstUpdated
+                .Subscribe((Rooms) =>
+                {
+                    RoomListDropdown.options.Clear();
+                    foreach (var Room in Rooms)
+                    {
+                        RoomListDropdown.options.Add(new Dropdown.OptionData(Room.Name));
+                    }
+                });
         }
     }
 }
