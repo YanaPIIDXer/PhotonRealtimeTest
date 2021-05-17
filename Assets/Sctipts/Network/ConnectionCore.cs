@@ -49,7 +49,7 @@ namespace Game.Network
 
         void OnDestroy()
         {
-            Client.Disconnect();
+            Disconnect();
             Client.RemoveCallbackTarget(this);
         }
 
@@ -64,6 +64,17 @@ namespace Game.Network
                 FixedRegion = "jp"
             };
             Client.ConnectUsingSettings(Settings);
+        }
+
+        /// <summary>
+        /// 切断
+        /// </summary>
+        public void Disconnect()
+        {
+            if (Client.IsConnected)
+            {
+                Client.Disconnect();
+            }
         }
 
         /// <summary>
