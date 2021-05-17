@@ -24,14 +24,14 @@ namespace Game.Network
         }
         private static ConnectionEventListener _Instance = null;
 
-        public string Hoge = "Hoge";
-
         public void OnConnected()
         {
+            Debug.Log("Connected");
         }
 
         public void OnConnectedToMaster()
         {
+            Debug.Log("ConnectedToMaster");
         }
 
         public void OnCustomAuthenticationFailed(string debugMessage)
@@ -44,6 +44,7 @@ namespace Game.Network
 
         public void OnDisconnected(DisconnectCause cause)
         {
+            Debug.Log("Disconnected. Reason:" + cause.ToString());
         }
 
         public void OnRegionListReceived(RegionHandler regionHandler)

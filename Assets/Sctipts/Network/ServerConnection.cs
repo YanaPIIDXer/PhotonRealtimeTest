@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.System;
 using Photon.Realtime;
+using Game.Enviroment;
 
 namespace Game.Network
 {
@@ -48,6 +49,21 @@ namespace Game.Network
         /// </summary>
         private LoadBalancingClient Client = new LoadBalancingClient();
 
+        /// <summary>
+        /// 接続
+        /// </summary>
+        public void Connect()
+        {
+            if (!Client.ConnectUsingSettings(new AppSettings()
+            {
+                AppIdRealtime = Environments.Instance.AppliactionKey,
+                FixedRegion = "jp"
+            }))
+            {
+                Debug.LogError("Connection Failed.");
+            }
+        }
+
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -61,6 +77,11 @@ namespace Game.Network
             Client.RemoveCallbackTarget(GetComponent<ConnectionEventListener>());
             Client.RemoveCallbackTarget(GetComponent<LobbyEventListener>());
             Client.RemoveCallbackTarget(GetComponent<RoomEventListener>());
+        }
+
+        void Update()
+        {
+            Client.Service();
         }
     }
 }
