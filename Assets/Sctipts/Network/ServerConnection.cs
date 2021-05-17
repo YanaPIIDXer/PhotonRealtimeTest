@@ -9,9 +9,10 @@ namespace Game.Network
     /// <summary>
     /// サーバとの接続
     /// </summary>
+    [RequireComponent(typeof(ConnectionEventListener))]
     [RequireComponent(typeof(LobbyEventListener))]
     [RequireComponent(typeof(RoomEventListener))]
-    public class ServerConnection : MonoBehaviour, IConnectionCallbacks
+    public class ServerConnection : MonoBehaviour
     {
         /// <summary>
         /// インスタンス
@@ -20,14 +21,27 @@ namespace Game.Network
         {
             get
             {
-                if (_Instance == null)
-                {
-                    _Instance = PrefabManager.Instance.Load<ServerConnection>("Prefabs/System/ServerConnection");
-                }
+                MakeIntsance();
                 return _Instance;
             }
         }
         private static ServerConnection _Instance = null;
+
+        /// <summary>
+        /// インスタンス化されているか？
+        /// </summary>
+        public static bool HasInstance { get { return _Instance != null; } }
+
+        /// <summary>
+        /// インスタンス生成
+        /// </summary>
+        public static void MakeIntsance()
+        {
+            if (_Instance == null)
+            {
+                _Instance = PrefabManager.Instance.Load<ServerConnection>("Prefabs/System/ServerConnection");
+            }
+        }
 
         /// <summary>
         /// クライアント
@@ -37,40 +51,16 @@ namespace Game.Network
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            Client.AddCallbackTarget(this);
+            Client.AddCallbackTarget(GetComponent<ConnectionEventListener>());
             Client.AddCallbackTarget(GetComponent<LobbyEventListener>());
             Client.AddCallbackTarget(GetComponent<RoomEventListener>());
         }
 
         void OnDestroy()
         {
-            Client.RemoveCallbackTarget(this);
+            Client.RemoveCallbackTarget(GetComponent<ConnectionEventListener>());
             Client.RemoveCallbackTarget(GetComponent<LobbyEventListener>());
             Client.RemoveCallbackTarget(GetComponent<RoomEventListener>());
-        }
-
-        public void OnConnected()
-        {
-        }
-
-        public void OnConnectedToMaster()
-        {
-        }
-
-        public void OnDisconnected(DisconnectCause cause)
-        {
-        }
-
-        public void OnRegionListReceived(RegionHandler regionHandler)
-        {
-        }
-
-        public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
-        {
-        }
-
-        public void OnCustomAuthenticationFailed(string debugMessage)
-        {
         }
     }
 }

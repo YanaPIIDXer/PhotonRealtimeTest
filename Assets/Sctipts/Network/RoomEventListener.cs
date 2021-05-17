@@ -13,7 +13,19 @@ namespace Game.Network
         /// <summary>
         /// インスタンス
         /// </summary>
-        public static RoomEventListener Instance { get; private set; }
+        public static RoomEventListener Instance
+        {
+            get
+            {
+                if (!ServerConnection.HasInstance)
+                {
+                    ServerConnection.MakeIntsance();
+                }
+                return _Instance;
+            }
+            private set { _Instance = value; }
+        }
+        private static RoomEventListener _Instance = null;
 
         public void OnCreatedRoom()
         {

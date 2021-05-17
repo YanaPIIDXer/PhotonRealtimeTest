@@ -5,15 +5,12 @@ using Photon.Realtime;
 
 namespace Game.Network
 {
-    /// <summary>
-    /// ロビーイベントリスナ
-    /// </summary>
-    public class LobbyEventListener : MonoBehaviour, ILobbyCallbacks
+    public class ConnectionEventListener : MonoBehaviour, IConnectionCallbacks
     {
         /// <summary>
         /// インスタンス
         /// </summary>
-        public static LobbyEventListener Instance
+        public static ConnectionEventListener Instance
         {
             get
             {
@@ -25,21 +22,31 @@ namespace Game.Network
             }
             private set { _Instance = value; }
         }
-        private static LobbyEventListener _Instance = null;
+        private static ConnectionEventListener _Instance = null;
 
-        public void OnJoinedLobby()
+        public string Hoge = "Hoge";
+
+        public void OnConnected()
         {
         }
 
-        public void OnLeftLobby()
+        public void OnConnectedToMaster()
         {
         }
 
-        public void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
+        public void OnCustomAuthenticationFailed(string debugMessage)
         {
         }
 
-        public void OnRoomListUpdate(List<RoomInfo> roomList)
+        public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
+        {
+        }
+
+        public void OnDisconnected(DisconnectCause cause)
+        {
+        }
+
+        public void OnRegionListReceived(RegionHandler regionHandler)
         {
         }
 
