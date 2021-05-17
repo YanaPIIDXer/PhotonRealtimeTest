@@ -36,6 +36,11 @@ namespace Game.Network
 
         #endregion
 
+        void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         public void OnJoinedLobby()
         {
         }
