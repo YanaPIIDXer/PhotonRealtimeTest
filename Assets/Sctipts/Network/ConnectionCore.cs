@@ -47,6 +47,12 @@ namespace Game.Network
             Client.Service();
         }
 
+        void OnDestroy()
+        {
+            Client.Disconnect();
+            Client.RemoveCallbackTarget(this);
+        }
+
         /// <summary>
         /// 接続
         /// </summary>
