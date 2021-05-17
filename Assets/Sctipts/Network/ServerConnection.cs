@@ -56,7 +56,7 @@ namespace Game.Network
         {
             if (!Client.ConnectUsingSettings(new AppSettings()
             {
-                AppIdRealtime = Environments.Instance.AppliactionKey,
+                AppIdRealtime = Environments.Instance.ApplicationKey,
                 FixedRegion = "jp"
             }))
             {

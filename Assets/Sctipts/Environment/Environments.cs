@@ -12,7 +12,7 @@ namespace Game.Enviroment
         /// <summary>
         /// アプリケーションキー
         /// </summary>
-        public string AppliactionKey { get; private set; }
+        public string ApplicationKey { get; private set; }
 
         #region Singleton
         public static Environments Instance { get { return _Instance; } }
