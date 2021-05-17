@@ -4,6 +4,8 @@ using UnityEngine;
 using Game.System;
 using Photon.Realtime;
 using Game.Enviroment;
+using UniRx;
+using System;
 
 namespace Game.Network
 {
@@ -21,19 +23,31 @@ namespace Game.Network
         {
             get
             {
-                _Instance = PrefabManager.Instance.Load<ConnectionCore>("Prefabs/System/ConnectionCore");
+                if (_Instance == null)
+                {
+                    _Instance = PrefabManager.Instance.Load<ConnectionCore>("Prefabs/System/ConnectionCore");
+                }
                 return _Instance;
             }
         }
         private static ConnectionCore _Instance = null;
         #endregion
 
-
-
         /// <summary>
         /// クライアント
         /// </summary>
         private LoadBalancingClient Client = new LoadBalancingClient();
+
+        /// <summary>
+        /// 接続Subject
+        /// </summary>
+        private Subject<Unit> OnConnectedSubject = new Subject<Unit>();
+
+        /// <summary>
+        /// サーバに接続された
+        /// </summary>
+        /// <value></value>
+        public IObservable<Unit> OnConnectedToServer { get { return OnConnectedSubject; } }
 
         void Awake()
         {
@@ -97,6 +111,7 @@ namespace Game.Network
         public void OnConnectedToMaster()
         {
             Debug.Log("OnConnectedToMaster()");
+            OnConnectedSubject.OnNext(Unit.Default);
         }
 
         public void OnDisconnected(DisconnectCause cause)

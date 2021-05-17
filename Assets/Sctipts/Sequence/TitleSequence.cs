@@ -4,6 +4,8 @@ using UnityEngine;
 using Game.UI;
 using Game.Network;
 using UniRx;
+using System;
+using UnityEngine.SceneManagement;
 
 namespace Game.Sequence
 {
@@ -20,6 +22,12 @@ namespace Game.Sequence
                 {
                     ConnectionCore.Instance.Connect();
                     ButtonHandler.Destroy();
+                }).AddTo(gameObject);
+
+            ConnectionCore.Instance.OnConnectedToServer
+                .Subscribe((_) =>
+                {
+                    SceneManager.LoadScene("MatchMake");
                 }).AddTo(gameObject);
         }
     }
