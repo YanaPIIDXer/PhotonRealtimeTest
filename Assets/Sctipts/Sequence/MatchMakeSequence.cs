@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Game.Network;
+using Game.UI;
 
 namespace Game.Sequence
 {
@@ -14,6 +15,7 @@ namespace Game.Sequence
         void Awake()
         {
             ConnectionCore.Instance.AddCallbackTarget(this);
+            var Handler = UIManager.Instance.Show<MatchMakeInterface>("MatchMakeInterface");
         }
 
         void OnDestroy()
