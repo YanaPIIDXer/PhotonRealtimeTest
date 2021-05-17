@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.System;
 using Photon.Realtime;
+using Game.Enviroment;
 
 namespace Game.Network
 {
@@ -41,12 +42,22 @@ namespace Game.Network
             Client.StateChanged += OnStateChange;
         }
 
+        void Update()
+        {
+            Client.Service();
+        }
+
         /// <summary>
         /// 接続
         /// </summary>
         public void Connect()
         {
-            // TODO:実装
+            var Settings = new AppSettings()
+            {
+                AppIdRealtime = Environments.Instance.AppliactionKey,
+                FixedRegion = "jp"
+            };
+            Client.ConnectUsingSettings(Settings);
         }
 
         /// <summary>
