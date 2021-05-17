@@ -54,6 +54,7 @@ namespace Game.Network
         {
             DontDestroyOnLoad(gameObject);
             Client.AddCallbackTarget(this);
+            Client.AddCallbackTarget(LobbyManager.Instance);
             Client.StateChanged += OnStateChange;
         }
 
@@ -66,6 +67,7 @@ namespace Game.Network
         {
             Disconnect();
             Client.RemoveCallbackTarget(this);
+            Client.RemoveCallbackTarget(LobbyManager.Instance);
         }
 
         /// <summary>
@@ -157,6 +159,7 @@ namespace Game.Network
         public void OnConnectedToMaster()
         {
             Debug.Log("OnConnectedToMaster()");
+            Client.OpJoinLobby(TypedLobby.Default);
             OnConnectedSubject.OnNext(Unit.Default);
         }
 
