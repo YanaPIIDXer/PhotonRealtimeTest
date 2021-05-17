@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.System;
+using Photon.Realtime;
 
 namespace Game.Network
 {
     /// <summary>
     /// サーバとの接続管理
     /// </summary>
-    public class ConnectionCore : MonoBehaviour
+    public class ConnectionCore : MonoBehaviour, IConnectionCallbacks
     {
+        #region Instance
         /// <summary>
         /// インスタンス
         /// </summary>
@@ -23,10 +25,73 @@ namespace Game.Network
             }
         }
         private static ConnectionCore _Instance = null;
+        #endregion
+
+
+
+        /// <summary>
+        /// クライアント
+        /// </summary>
+        private LoadBalancingClient Client = new LoadBalancingClient();
 
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
+            Client.AddCallbackTarget(this);
+            Client.StateChanged += OnStateChange;
         }
+
+        /// <summary>
+        /// 接続
+        /// </summary>
+        public void Connect()
+        {
+            // TODO:実装
+        }
+
+        /// <summary>
+        /// クライアントの状態が遷移した
+        /// </summary>
+        /// <param name="Prev">前</param>
+        /// <param name="Next">次</param>
+        private void OnStateChange(ClientState Prev, ClientState Next)
+        {
+            Debug.Log("ClientStateChange:  " + Prev.ToString() + " => " + Next.ToString());
+        }
+
+        #region IConnectionCallbacks
+
+        public void OnConnected()
+        {
+            Debug.Log("OnConnected()");
+        }
+
+        public void OnConnectedToMaster()
+        {
+            Debug.Log("OnConnectedToMaster()");
+        }
+
+        public void OnDisconnected(DisconnectCause cause)
+        {
+            Debug.Log("OnDisconnected(" + cause.ToString() + ")");
+        }
+
+        public void OnRegionListReceived(RegionHandler regionHandler)
+        {
+            Debug.Log("OnRegionListReceived()");
+        }
+
+        public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
+        {
+            Debug.Log("OnCustomAuthenticationResponse()");
+        }
+
+        public void OnCustomAuthenticationFailed(string debugMessage)
+        {
+            Debug.LogError("OnCustomAuthenticationFailed()");
+            Debug.LogError(debugMessage);
+        }
+
+        #endregion
     }
 }
