@@ -92,6 +92,24 @@ namespace Game.Network
         }
 
         /// <summary>
+        /// コールバックを受け取るオブジェクトを設定
+        /// </summary>
+        /// <param name="Obj">コールバックを受け取るオブジェクト</param>
+        public void AddCallbackTarget(object Obj)
+        {
+            Client.AddCallbackTarget(Obj);
+        }
+
+        /// <summary>
+        /// コールバックを受け取りを解除
+        /// </summary>
+        /// <param name="Obj">コールバックを受け取っていたオブジェクト</param>
+        public void RemoveCallbackTarget(object Obj)
+        {
+            Client.RemoveCallbackTarget(Obj);
+        }
+
+        /// <summary>
         /// クライアントの状態が遷移した
         /// </summary>
         /// <param name="Prev">前</param>
