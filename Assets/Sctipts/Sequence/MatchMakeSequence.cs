@@ -22,7 +22,7 @@ namespace Game.Sequence
                 .Subscribe((RoomName) => ConnectionCore.Instance.CreateRoom(RoomName, 2));
 
             Handler.Instance.OnJoinRoom
-                .Subscribe((RoomName) => Debug.Log("Join:" + RoomName));
+                .Subscribe((RoomName) => ConnectionCore.Instance.JoinRoom(RoomName));
 
             RoomManager.Instance.OnJoined
                 .Subscribe((_) =>

@@ -127,6 +127,18 @@ namespace Game.Network
         }
 
         /// <summary>
+        /// ルームに参加
+        /// </summary>
+        /// <param name="RoomName">ルーム名</param>
+        public void JoinRoom(string RoomName)
+        {
+            EnterRoomParams Param = new EnterRoomParams();
+            Param.RoomName = RoomName;
+            Param.RoomOptions = new RoomOptions();
+            Client.OpJoinRoom(Param);
+        }
+
+        /// <summary>
         /// ゲーム中のイベント送信
         /// ※多分これPhotonServerと同じような仕組みなんじゃないかな・・・？
         /// 　だとすればPhotonServerTestで使ってるパケットが丸々使えることになるが。
