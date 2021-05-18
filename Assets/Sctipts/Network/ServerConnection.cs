@@ -74,6 +74,30 @@ namespace Game.Network
             Client.OpJoinLobby(TypedLobby.Default);
         }
 
+        /// <summary>
+        /// ルーム作成
+        /// </summary>
+        /// <param name="RoomName">ルーム名</param>
+        public void CreateRoom(string RoomName)
+        {
+            EnterRoomParams Params = new EnterRoomParams();
+            Params.RoomName = RoomName;
+            Params.RoomOptions = new RoomOptions();
+            Params.RoomOptions.MaxPlayers = 50;
+            Client.OpCreateRoom(Params);
+        }
+
+        /// <summary>
+        /// ルームに参加
+        /// </summary>
+        /// <param name="RoomName">ルーム名</param>
+        public void JoinRoom(string RoomName)
+        {
+            EnterRoomParams Params = new EnterRoomParams();
+            Params.RoomName = RoomName;
+            Client.OpJoinRoom(Params);
+        }
+
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
