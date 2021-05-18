@@ -21,6 +21,9 @@ namespace Game.Player
         /// </summary>
         private Vector2 MoveDirection = Vector2.zero;
 
+        /// <summary>
+        /// 移動速度
+        /// </summary>
         private static readonly float MoveSpeed = 2.0f;
 
         /// <summary>
