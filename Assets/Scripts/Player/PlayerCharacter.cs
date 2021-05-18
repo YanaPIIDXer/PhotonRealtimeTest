@@ -48,9 +48,11 @@ namespace Game.Player
         {
             LocalPlayerMove Move = new LocalPlayerMove(this, Input.Move);
             MovePacketSender MoveSender = new MovePacketSender(this);
+            PlayerRotation Rotation = new PlayerRotation(this, Move.OnUpdateMoveVector);
 
             RegisterPlayerComponent(Move);
             RegisterPlayerComponent(MoveSender);
+            RegisterPlayerComponent(Rotation);
         }
 
         /// <summary>
@@ -59,8 +61,10 @@ namespace Game.Player
         public void SetupAsOtherPlayer()
         {
             OtherPlayerMove Move = new OtherPlayerMove(this, OnRecvPacketSubject);
+            PlayerRotation Rotation = new PlayerRotation(this, Move.OnUpdateMoveVector);
 
             RegisterPlayerComponent(Move);
+            RegisterPlayerComponent(Rotation);
         }
 
         /// <summary>

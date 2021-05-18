@@ -39,6 +39,16 @@ namespace Game.Player
         private static readonly float MoveTime = 1.0f;
 
         /// <summary>
+        /// 移動ベクトル更新Subject
+        /// </summary>
+        private Subject<Vector3> UpdateMoveVectorSubject = new Subject<Vector3>();
+
+        /// <summary>
+        /// 移動ベクトル更新
+        /// </summary>
+        public IObservable<Vector3> OnUpdateMoveVector { get { return UpdateMoveVectorSubject; } }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="Owner">所有者</param>
@@ -55,6 +65,9 @@ namespace Game.Player
                     PrevPos = OwnerTransform.position;
                     DestPos = Pos;
                     LastTime = MoveTime;
+
+                    var Vec = DestPos - PrevPos;
+                    UpdateMoveVectorSubject.OnNext(Vec);
                 });
         }
 
@@ -68,6 +81,11 @@ namespace Game.Player
             LastTime = Mathf.Max(0.0f, LastTime - Time.deltaTime);
             float Ratio = 1.0f - (LastTime / MoveTime);
             OwnerTransform.position = Vector3.Lerp(PrevPos, DestPos, Ratio);
+
+            if (LastTime <= 0.0f)
+            {
+                UpdateMoveVectorSubject.OnNext(Vector3.zero);
+            }
         }
     }
 }

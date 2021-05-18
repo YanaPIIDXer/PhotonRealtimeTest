@@ -27,6 +27,16 @@ namespace Game.Player
         private static readonly float MoveSpeed = 2.0f;
 
         /// <summary>
+        /// 移動ベクトル更新Subject
+        /// </summary>
+        private Subject<Vector3> UpdateMoveVectorSubject = new Subject<Vector3>();
+
+        /// <summary>
+        /// 移動ベクトル更新
+        /// </summary>
+        public IObservable<Vector3> OnUpdateMoveVector { get { return UpdateMoveVectorSubject; } }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="Body">Rigidbody</param>
@@ -36,7 +46,11 @@ namespace Game.Player
         {
             Body = Owner.GetComponent<Rigidbody>();
             MoveObservable
-                .Subscribe((Direction) => MoveDirection = Direction);
+                .Subscribe((Direction) =>
+                {
+                    MoveDirection = Direction;
+                    UpdateMoveVectorSubject.OnNext(new Vector3(Direction.x, 0.0f, Direction.y) * MoveSpeed);
+                });
         }
 
         /// <summary>
