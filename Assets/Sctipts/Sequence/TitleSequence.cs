@@ -7,6 +7,7 @@ using Game.Network;
 using Game.UI;
 using Game.UI.Component;
 using UniRx.Operators;
+using UnityEngine.SceneManagement;
 
 namespace Game.Sequence
 {
@@ -40,7 +41,7 @@ namespace Game.Sequence
                 });
 
             RoomEventListener.Instance.JoinedRoom
-                .Subscribe((_) => Debug.Log("げぇむ　すたぁと"));
+                .Subscribe((_) => SceneManager.LoadScene("Game"));
 
             UIManager.Instance.Show<TitleScreen>("TitleScreen");
         }
