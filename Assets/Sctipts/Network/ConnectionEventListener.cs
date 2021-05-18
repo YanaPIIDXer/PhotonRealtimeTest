@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
+using UniRx;
+using System;
 
 namespace Game.Network
 {
@@ -24,14 +26,34 @@ namespace Game.Network
         }
         private static ConnectionEventListener _Instance = null;
 
+        /// <summary>
+        /// 接続時Subect
+        /// </summary>
+        private Subject<Unit> ConnectedSubject = new Subject<Unit>();
+
+        /// <summary>
+        /// 接続された
+        /// </summary>
+        public IObservable<Unit> Connected { get { return ConnectedSubject; } }
+
+        /// <summary>
+        /// 切断時Subject
+        /// </summary>
+        private Subject<DisconnectCause> DisconnectedSubject = new Subject<DisconnectCause>();
+
+        /// <summary>
+        /// 切断された
+        /// </summary>
+        /// <value></value>
+        public IObservable<DisconnectCause> Disconnected { get { return DisconnectedSubject; } }
+
         public void OnConnected()
         {
-            Debug.Log("Connected");
         }
 
         public void OnConnectedToMaster()
         {
-            Debug.Log("ConnectedToMaster");
+            ConnectedSubject.OnNext(Unit.Default);
         }
 
         public void OnCustomAuthenticationFailed(string debugMessage)
@@ -44,7 +66,7 @@ namespace Game.Network
 
         public void OnDisconnected(DisconnectCause cause)
         {
-            Debug.Log("Disconnected. Reason:" + cause.ToString());
+            DisconnectedSubject.OnNext(cause);
         }
 
         public void OnRegionListReceived(RegionHandler regionHandler)
