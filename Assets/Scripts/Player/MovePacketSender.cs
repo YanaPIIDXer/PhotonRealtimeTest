@@ -16,7 +16,7 @@ namespace Game.Player
         /// <summary>
         /// 現在の座標
         /// </summary>
-        private ReactiveProperty<Vector3> CurrentPosition = null;
+        private ReactiveProperty<Vector3> CurrentPosition = new ReactiveProperty<Vector3>();
 
         /// <summary>
         /// 所有者のTransform
@@ -30,11 +30,11 @@ namespace Game.Player
         public MovePacketSender(PlayerCharacter Owner)
             : base(Owner)
         {
-            CurrentPosition = new ReactiveProperty<Vector3>(Owner.transform.position);
             OwnerTransform = Owner.transform;
 
             CurrentPosition
                 .ThrottleFirst(TimeSpan.FromSeconds(3.0))
+                .Skip(1)
                 .Subscribe((Pos) => SendPacket(new PacketPlayerMove()));
         }
 
