@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.UI;
+using Game.Packet;
+using UniRx;
+using System;
 
 namespace Game.Player
 {
@@ -17,6 +20,11 @@ namespace Game.Player
         private List<PlayerComponent> Components = new List<PlayerComponent>();
 
         /// <summary>
+        /// パケットを受信した
+        /// </summary>
+        private Subject<IPacket> OnRecvPacketSubject = new Subject<IPacket>();
+
+        /// <summary>
         /// 自キャラとしてセットアップ
         /// </summary>
         /// <param name="Input">各種入力</param>
@@ -24,6 +32,22 @@ namespace Game.Player
         {
             LocalPlayerMove Move = new LocalPlayerMove(GetComponent<Rigidbody>(), Input.Move);
             RegisterPlayerComponent(Move);
+        }
+
+        /// <summary>
+        /// 他人としてセットアップ
+        /// </summary>
+        public void SetupAsOtherPlayer()
+        {
+        }
+
+        /// <summary>
+        /// パケットを受信した
+        /// </summary>
+        /// <param name="Packet">パケット</param>
+        public void OnRecvPacket(IPacket Packet)
+        {
+            OnRecvPacketSubject.OnNext(Packet);
         }
 
         /// <summary>

@@ -110,7 +110,7 @@ namespace Game.Network
         {
             DictionaryStreamWriter Writer = new DictionaryStreamWriter();
             Packet.Serialize(Writer);
-            Writer.Dest.Add((byte)(Writer.Dest.Count + 1), PlayerPosition);
+            PlayerPosition.Serialize(Writer);
             Client.OpRaiseEvent((byte)Packet.PacketID, Writer.Dest, new RaiseEventOptions(), new SendOptions());
         }
 
@@ -138,8 +138,6 @@ namespace Game.Network
             Client.AddCallbackTarget(GetComponent<ConnectionEventListener>());
             Client.AddCallbackTarget(GetComponent<LobbyEventListener>());
             Client.AddCallbackTarget(GetComponent<RoomEventListener>());
-
-            PhotonPeer.RegisterType(typeof(Vector3), 1, CustomClasses.SerializeVector3, CustomClasses.DeserializeVector3);
         }
 
         void OnDestroy()
