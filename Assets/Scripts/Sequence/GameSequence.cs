@@ -96,8 +96,8 @@ namespace Game.Sequence
             DictionaryStreamReader Reader = new DictionaryStreamReader(Dic);
             Packet.Serialize(Reader);
 
-            Vector3 Position = new Vector3();
-            Position.Serialize(Reader);     // この中でログ吐いたら正しく値が入っているのに、何故かゼロベクトルのまま。
+            Vector3 Position = ExtensionMethods.SerializeVector3(Reader);
+            Debug.Log(Position);
 
             if (!OtherPlayers[Data.Sender].IsActive)
             {
