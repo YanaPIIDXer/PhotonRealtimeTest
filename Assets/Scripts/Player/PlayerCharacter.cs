@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.UI;
 
 namespace Game.Player
 {
@@ -14,6 +15,16 @@ namespace Game.Player
         /// コンポーネントリスト
         /// </summary>
         private List<PlayerComponent> Components = new List<PlayerComponent>();
+
+        /// <summary>
+        /// 自キャラとしてセットアップ
+        /// </summary>
+        /// <param name="Input">各種入力</param>
+        public void SetupAsLocalPlayer(InputObservables Input)
+        {
+            LocalPlayerMove Move = new LocalPlayerMove(GetComponent<Rigidbody>(), Input.Move);
+            RegisterPlayerComponent(Move);
+        }
 
         /// <summary>
         /// PlayerComponentを登録

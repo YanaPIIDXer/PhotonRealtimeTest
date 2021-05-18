@@ -21,6 +21,8 @@ namespace Game.Player
         /// </summary>
         private Vector2 MoveDirection = Vector2.zero;
 
+        private static readonly float MoveSpeed = 2.0f;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -38,7 +40,7 @@ namespace Game.Player
         /// </summary>
         public override void OnFixedUpdate()
         {
-            Body.velocity = new Vector3(MoveDirection.x, 0.0f, MoveDirection.y);
+            Body.velocity = new Vector3(MoveDirection.x, 0.0f, MoveDirection.y) * MoveSpeed;
         }
     }
 }

@@ -8,6 +8,8 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Game.UI;
 using Game.UI.Component;
+using Game.System;
+using Game.Player;
 
 namespace Game.Sequence
 {
@@ -25,7 +27,8 @@ namespace Game.Sequence
             Game.Network.ServerConnection.Instance.RegisterCallbackTarget(this);
 
             var Handler = UIManager.Instance.Show<GameHUD>("GameHUD");
-            Handler.Instance.Inputs.Move.Subscribe((Value) => Debug.Log(Value.ToString()));
+            var Player = PrefabManager.Instance.Load<PlayerCharacter>("Prefabs/System/Player");
+            Player.SetupAsLocalPlayer(Handler.Instance.Inputs);
         }
 
         void OnDestroy()
