@@ -24,17 +24,6 @@ namespace Game.Player
         }
 
         /// <summary>
-        /// GetComponentでMonoBehaviour派生のComponentを取得
-        /// </summary>
-        /// <typeparam name="T">MonoBehaviour派生Component</typeparam>
-        /// <returns>Component</returns>
-        protected T GetMonoBehaviourComponent<T>()
-            where T : MonoBehaviour
-        {
-            return Owner.GetComponent<T>();
-        }
-
-        /// <summary>
         /// Update
         /// </summary>
         public virtual void OnUpdate() { }
