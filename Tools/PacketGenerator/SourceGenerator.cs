@@ -140,6 +140,10 @@ namespace NativePacketGenerator
             {
                 BaseClass = " : IPacket";
             }
+            else
+            {
+                BaseClass = " : ISerializable";
+            }
             Template = Template.Replace("%BASE_CLASS%", BaseClass);
 
             // パケットID
