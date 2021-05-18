@@ -3,9 +3,9 @@
     public enum EPacketID
     {
     	/// <summary>
-		/// プレイヤー登場パケット
+		/// プレイヤー移動パケット
 		/// </summary>
-		PlayerEnter = 0x01,
+		PlayerMove = 0x01,
 		
 	}
 }

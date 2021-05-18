@@ -3,14 +3,9 @@ using Game.Stream;
 
 namespace Game.Packet
 {
-    public class PacketPlayerEnter  : IPacket
+    public class PacketPlayerMove  : IPacket
 	{
 		
-
-		/// <summary>
-		///  ID
-		/// </summary>
-		public int Id = new int();
 
 		/// <summary>
 		///  座標
@@ -19,22 +14,20 @@ namespace Game.Packet
 
 		
 
-		public EPacketID PacketID { get { return EPacketID.PlayerEnter; } }
+		public EPacketID PacketID { get { return EPacketID.PlayerMove; } }
 
-		public PacketPlayerEnter()
+		public PacketPlayerMove()
 		{
 		}
 
-		public PacketPlayerEnter(int Id, Vec3 Position)
+		public PacketPlayerMove(Vec3 Position)
 		{
-			this.Id = Id;
 			this.Position = Position;
 			
 		}
 
 		public bool Serialize(IStream Stream)
 		{
-			Stream.Serialize(ref Id);
 			Position.Serialize(Stream);
 			
 			return true;
