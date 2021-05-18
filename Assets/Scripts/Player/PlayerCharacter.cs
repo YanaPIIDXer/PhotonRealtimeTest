@@ -31,7 +31,10 @@ namespace Game.Player
         public void SetupAsLocalPlayer(InputObservables Input)
         {
             LocalPlayerMove Move = new LocalPlayerMove(this, Input.Move);
+            MovePacketSender MoveSender = new MovePacketSender(this);
+
             RegisterPlayerComponent(Move);
+            RegisterPlayerComponent(MoveSender);
         }
 
         /// <summary>
