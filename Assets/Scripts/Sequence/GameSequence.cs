@@ -8,10 +8,10 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Game.UI;
 using Game.UI.Component;
-using Game.System;
 using Game.Player;
 using Game.Stream;
 using Game.Packet;
+using Game.System;
 
 namespace Game.Sequence
 {
@@ -23,7 +23,7 @@ namespace Game.Sequence
         /// <summary>
         /// 他人リスト
         /// </summary>
-        private Dictionary<int, PlayerCharacter> OtherPlayers = new Dictionary<int, PlayerCharacter>();
+        private Dictionary<int, PlayerHandler> OtherPlayers = new Dictionary<int, PlayerHandler>();
 
         #region これどこかに定数定義無いの？
 
@@ -41,23 +41,22 @@ namespace Game.Sequence
 
         public void OnEvent(EventData photonEvent)
         {
-            Debug.Log("OnEvent Code:" + photonEvent.Code);
-
             switch (photonEvent.Code)
             {
                 case PlayerJoinCode:
 
                     // 入場
-                    var Player = PrefabManager.Instance.Load<PlayerCharacter>("Prefabs/System/Player");
-                    Player.SetupAsOtherPlayer();
-                    OtherPlayers.Add(photonEvent.Sender, Player);
+                    OtherPlayers.Add(photonEvent.Sender, new PlayerHandler());
                     break;
 
                 case PlayerLeaveCode:
 
                     // 退場
-                    Destroy(OtherPlayers[photonEvent.Sender].gameObject);
-                    OtherPlayers.Remove(photonEvent.Sender);
+                    if (OtherPlayers.ContainsKey(photonEvent.Sender))
+                    {
+                        OtherPlayers[photonEvent.Sender].Destroy();
+                        OtherPlayers.Remove(photonEvent.Sender);
+                    }
                     break;
 
                 default:
@@ -96,10 +95,13 @@ namespace Game.Sequence
             {
                 // 知らない人からのパケットを受信した場合、その人を生成する
                 // ※入退場はPhotonのシステムで通知されるけど、既にルームにいる人はそうでもないらしい
-                var Player = PrefabManager.Instance.Load<PlayerCharacter>("Prefabs/System/Player");
-                Player.SetupAsOtherPlayer();
-                Player.transform.position = Position;
-                OtherPlayers.Add(Data.Sender, Player);
+                OtherPlayers.Add(Data.Sender, new PlayerHandler());
+            }
+
+            if (!OtherPlayers[Data.Sender].IsActive)
+            {
+                // 座標が確定するので生成
+                OtherPlayers[Data.Sender].Spawn(Position);
             }
 
             OtherPlayers[Data.Sender].OnRecvPacket(Position, Packet);
