@@ -31,7 +31,7 @@ namespace Game.Player
             }
         }
 
-        void FixedUPdate()
+        void FixedUpdate()
         {
             foreach (var Component in Components)
             {
