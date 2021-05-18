@@ -92,6 +92,16 @@ namespace Game.Sequence
             Vector3 Position = new Vector3();
             Position.Serialize(Reader);
 
+            if (!OtherPlayers.ContainsKey(Data.Sender))
+            {
+                // 知らない人からのパケットを受信した場合、その人を生成する
+                // ※入退場はPhotonのシステムで通知されるけど、既にルームにいる人はそうでもないらしい
+                var Player = PrefabManager.Instance.Load<PlayerCharacter>("Prefabs/System/Player");
+                Player.SetupAsOtherPlayer();
+                Player.transform.position = Position;
+                OtherPlayers.Add(Data.Sender, Player);
+            }
+
             OtherPlayers[Data.Sender].OnRecvPacket(Position, Packet);
         }
 
