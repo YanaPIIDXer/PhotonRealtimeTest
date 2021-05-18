@@ -1,0 +1,42 @@
+using System.Collections.Generic;
+using Common.Stream;
+
+namespace Common.Packet
+{
+    public class $CLASS_NAME$ %BASE_CLASS%
+	{
+		$ENUMS$
+
+		$MEMBERS$
+
+		$PACKET_ID$
+
+		public $CLASS_NAME$()
+		{
+		}
+
+		$CONSTRUCTOR$
+
+		public bool Serialize(IStream Stream)
+		{
+			$SERIALIZE_MEMBERS$
+			return true;
+		}
+
+		public static byte[] SerializeObject(object customType)
+		{
+			var Stream = new MemoryStreamWriter();
+			var Obj = ($CLASS_NAME$)customType;
+			Obj.Serialize(Stream);
+			return Stream.Buffer.ToArray();
+		}
+
+		public static object DeserializeObject(byte[] data)
+		{
+			var Stream = new MemoryStreamReader(data);
+			var Obj = new $CLASS_NAME$();
+			Obj.Serialize(Stream);
+			return Obj;
+		}
+	}
+}
