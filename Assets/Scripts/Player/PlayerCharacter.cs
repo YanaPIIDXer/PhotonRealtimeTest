@@ -47,8 +47,9 @@ namespace Game.Player
         /// <summary>
         /// パケットを受信した
         /// </summary>
+        /// <param name="Position">受信した時点での座標</param>
         /// <param name="Packet">パケット</param>
-        public void OnRecvPacket(IPacket Packet)
+        public void OnRecvPacket(Vector3 Position, IPacket Packet)
         {
             OnRecvPacketSubject.OnNext(Packet);
         }

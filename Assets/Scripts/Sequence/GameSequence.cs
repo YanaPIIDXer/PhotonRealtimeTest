@@ -43,18 +43,19 @@ namespace Game.Sequence
             DictionaryStreamReader Reader = new DictionaryStreamReader((Dictionary<byte, object>)photonEvent.CustomData);
             Packet.Serialize(Reader);
 
+            Vector3 Position = new Vector3();
+            Position.Serialize(Reader);
+
             if (!OtherPlayers.ContainsKey(photonEvent.Sender))
             {
                 // 知らない人からのパケットを受信した場合、その人を生成する
                 var Player = PrefabManager.Instance.Load<PlayerCharacter>("Prefabs/System/Player");
                 Player.SetupAsOtherPlayer();
-                Vector3 Position = new Vector3();
-                Position.Serialize(Reader);
                 Player.transform.position = Position;
                 OtherPlayers.Add(photonEvent.Sender, Player);
             }
 
-            OtherPlayers[photonEvent.Sender].OnRecvPacket(Packet);
+            OtherPlayers[photonEvent.Sender].OnRecvPacket(Position, Packet);
         }
 
         void Awake()
