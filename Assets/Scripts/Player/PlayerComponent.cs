@@ -21,7 +21,6 @@ namespace Game.Player
         public PlayerComponent(PlayerCharacter Owner)
         {
             this.Owner = Owner;
-            Initialize();
         }
 
         /// <summary>
@@ -34,11 +33,6 @@ namespace Game.Player
         {
             return Owner.GetComponent<T>();
         }
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        protected virtual void Initialize() { }
 
         /// <summary>
         /// Update
