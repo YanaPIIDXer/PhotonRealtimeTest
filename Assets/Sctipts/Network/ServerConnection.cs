@@ -98,6 +98,24 @@ namespace Game.Network
             Client.OpJoinRoom(Params);
         }
 
+        /// <summary>
+        /// コールバック対象に登録
+        /// </summary>
+        /// <param name="Target">対象</param>
+        public void RegisterCallbackTarget(object Target)
+        {
+            Client.AddCallbackTarget(Target);
+        }
+
+        /// <summary>
+        /// コールバック対象から外す
+        /// </summary>
+        /// <param name="Target">対象</param>
+        public void UnregisterCallbackTarget(object Target)
+        {
+            Client.RemoveCallbackTarget(Target);
+        }
+
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
