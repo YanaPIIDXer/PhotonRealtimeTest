@@ -7,6 +7,7 @@ namespace Game.Player
     /// <summary>
     /// プレイヤーキャラ
     /// </summary>
+    [RequireComponent(typeof(Rigidbody))]
     public class PlayerCharacter : MonoBehaviour
     {
         /// <summary>
