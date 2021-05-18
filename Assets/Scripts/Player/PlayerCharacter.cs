@@ -30,7 +30,7 @@ namespace Game.Player
         /// <param name="Input">各種入力</param>
         public void SetupAsLocalPlayer(InputObservables Input)
         {
-            LocalPlayerMove Move = new LocalPlayerMove(GetComponent<Rigidbody>(), Input.Move);
+            LocalPlayerMove Move = new LocalPlayerMove(this, Input.Move);
             RegisterPlayerComponent(Move);
         }
 

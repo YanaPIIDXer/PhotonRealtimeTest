@@ -28,9 +28,10 @@ namespace Game.Player
         /// </summary>
         /// <param name="Body">Rigidbody</param>
         /// <param name="MoveObservable">移動入力のObservable</param>
-        public LocalPlayerMove(Rigidbody Body, IObservable<Vector2> MoveObservable)
+        public LocalPlayerMove(PlayerCharacter Owner, IObservable<Vector2> MoveObservable)
+            : base(Owner)
         {
-            this.Body = Body;
+            Body = Owner.GetComponent<Rigidbody>();
             MoveObservable
                 .Subscribe((Direction) => MoveDirection = Direction);
         }
