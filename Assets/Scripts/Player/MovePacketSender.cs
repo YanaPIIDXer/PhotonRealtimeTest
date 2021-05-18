@@ -14,36 +14,14 @@ namespace Game.Player
     public class MovePacketSender : PlayerComponent
     {
         /// <summary>
-        /// 現在の座標
-        /// </summary>
-        private ReactiveProperty<Vector3> CurrentPosition = new ReactiveProperty<Vector3>();
-
-        /// <summary>
-        /// 所有者のTransform
-        /// </summary>
-        private Transform OwnerTransform = null;
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="Owner">所有者</param>
         public MovePacketSender(PlayerCharacter Owner)
             : base(Owner)
         {
-            OwnerTransform = Owner.transform;
-
-            CurrentPosition
-                .ThrottleFirst(TimeSpan.FromSeconds(3.0))
-                .Skip(1)
+            Observable.Interval(TimeSpan.FromSeconds(1.0))
                 .Subscribe((Pos) => SendPacket(new PacketPlayerMove()));
-        }
-
-        /// <summary>
-        /// Update
-        /// </summary>
-        public override void OnUpdate()
-        {
-            CurrentPosition.Value = OwnerTransform.position;
         }
     }
 }

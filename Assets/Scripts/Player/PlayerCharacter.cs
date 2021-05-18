@@ -11,7 +11,7 @@ namespace Game.Player
     /// <summary>
     /// パケットプロトコル
     /// </summary>
-    struct PacketProtocol
+    public struct PacketProtocol
     {
         /// <summary>
         /// 座標
@@ -58,6 +58,9 @@ namespace Game.Player
         /// </summary>
         public void SetupAsOtherPlayer()
         {
+            OtherPlayerMove Move = new OtherPlayerMove(this, OnRecvPacketSubject);
+
+            RegisterPlayerComponent(Move);
         }
 
         /// <summary>
