@@ -28,6 +28,15 @@ namespace Game.Sequence
         public void OnEvent(EventData photonEvent)
         {
             Debug.Log("OnEvent Code:" + photonEvent.Code);
+            if (photonEvent.Code == 255)
+            {
+                // 何か届いてる。
+                // 実はこれが「入場」ではなかろうか？
+                // TODO:Photon Realtime側で予約しているイベントコードがあるっぽい（255も然り）ので調査
+                Debug.Log("What's the?!");
+                return;
+            }
+
             IPacket Packet = null;
             switch ((EPacketID)photonEvent.Code)
             {
