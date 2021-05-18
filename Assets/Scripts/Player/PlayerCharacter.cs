@@ -49,10 +49,15 @@ namespace Game.Player
             LocalPlayerMove Move = new LocalPlayerMove(this, Input.Move);
             MovePacketSender MoveSender = new MovePacketSender(this);
             PlayerRotation Rotation = new PlayerRotation(this, Move.OnUpdateMoveVector);
+            PlayerAnimation Animation = new PlayerAnimation(this, new AnimationObservables()
+            {
+                IsMoving = Move.OnUpdateMoveVector.Select((Vec) => Vec.sqrMagnitude > 0.0f)
+            });
 
             RegisterPlayerComponent(Move);
             RegisterPlayerComponent(MoveSender);
             RegisterPlayerComponent(Rotation);
+            RegisterPlayerComponent(Animation);
         }
 
         /// <summary>
@@ -62,6 +67,10 @@ namespace Game.Player
         {
             OtherPlayerMove Move = new OtherPlayerMove(this, OnRecvPacketSubject);
             PlayerRotation Rotation = new PlayerRotation(this, Move.OnUpdateMoveVector);
+            PlayerAnimation Animation = new PlayerAnimation(this, new AnimationObservables()
+            {
+                IsMoving = Move.OnUpdateMoveVector.Select((Vec) => Vec.sqrMagnitude > 1.0f)
+            });
 
             RegisterPlayerComponent(Move);
             RegisterPlayerComponent(Rotation);
