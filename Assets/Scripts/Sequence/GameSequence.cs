@@ -97,7 +97,6 @@ namespace Game.Sequence
             Packet.Serialize(Reader);
 
             Vector3 Position = ExtensionMethods.SerializeVector3(Reader);
-            Debug.Log(Position);
 
             if (!OtherPlayers[Data.Sender].IsActive)
             {
