@@ -85,19 +85,19 @@ namespace Game.Sequence
                     throw new Exception("Invalid Packet Code:" + Data.Code);
             }
 
-            var Dic = (Dictionary<byte, object>)Data.CustomData;
-            DictionaryStreamReader Reader = new DictionaryStreamReader(Dic);
-            Packet.Serialize(Reader);
-
-            Vector3 Position = new Vector3();
-            Position.Serialize(Reader);
-
             if (!OtherPlayers.ContainsKey(Data.Sender))
             {
                 // 知らない人からのパケットを受信した場合、その人を生成する
                 // ※入退場はPhotonのシステムで通知されるけど、既にルームにいる人はそうでもないらしい
                 OtherPlayers.Add(Data.Sender, new PlayerHandler());
             }
+
+            var Dic = (Dictionary<byte, object>)Data.CustomData;
+            DictionaryStreamReader Reader = new DictionaryStreamReader(Dic);
+            Packet.Serialize(Reader);
+
+            Vector3 Position = new Vector3();
+            Position.Serialize(Reader);     // この中でログ吐いたら正しく値が入っているのに、何故かゼロベクトルのまま。
 
             if (!OtherPlayers[Data.Sender].IsActive)
             {
