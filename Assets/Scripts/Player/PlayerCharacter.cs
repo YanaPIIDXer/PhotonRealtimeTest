@@ -9,6 +9,22 @@ using System;
 namespace Game.Player
 {
     /// <summary>
+    /// パケットプロトコル
+    /// </summary>
+    struct PacketProtocol
+    {
+        /// <summary>
+        /// 座標
+        /// </summary>
+        public Vector3 Position;
+
+        /// <summary>
+        /// パケット
+        /// </summary>
+        public IPacket Packet;
+    }
+
+    /// <summary>
     /// プレイヤーキャラ
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
@@ -22,7 +38,7 @@ namespace Game.Player
         /// <summary>
         /// パケットを受信した
         /// </summary>
-        private Subject<IPacket> OnRecvPacketSubject = new Subject<IPacket>();
+        private Subject<PacketProtocol> OnRecvPacketSubject = new Subject<PacketProtocol>();
 
         /// <summary>
         /// 自キャラとしてセットアップ
@@ -51,7 +67,12 @@ namespace Game.Player
         /// <param name="Packet">パケット</param>
         public void OnRecvPacket(Vector3 Position, IPacket Packet)
         {
-            OnRecvPacketSubject.OnNext(Packet);
+            PacketProtocol Protocol = new PacketProtocol()
+            {
+                Position = Position,
+                Packet = Packet
+            };
+            OnRecvPacketSubject.OnNext(Protocol);
         }
 
         /// <summary>
