@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Packet;
+using Game.Network;
 
 namespace Game.Player
 {
@@ -21,6 +23,15 @@ namespace Game.Player
         public PlayerComponent(PlayerCharacter Owner)
         {
             this.Owner = Owner;
+        }
+
+        /// <summary>
+        /// パケット送信
+        /// </summary>
+        /// <param name="Packet">パケット</param>
+        protected void SendPacket(IPacket Packet)
+        {
+            ServerConnection.Instance.SendPacket(Owner.transform.position, Packet);
         }
 
         /// <summary>
