@@ -20,12 +20,12 @@ namespace Game.Sequence
 
         void Awake()
         {
-            ServerConnection.Instance.RegisterCallbackTarget(this);
+            Game.Network.ServerConnection.Instance.RegisterCallbackTarget(this);
         }
 
         void OnDestroy()
         {
-            ServerConnection.Instance.UnregisterCallbackTarget(this);
+            Game.Network.ServerConnection.Instance.UnregisterCallbackTarget(this);
         }
     }
 }
