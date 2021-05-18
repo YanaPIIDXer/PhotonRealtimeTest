@@ -6,6 +6,7 @@ using Photon.Realtime;
 using Game.Enviroment;
 using UniRx;
 using System;
+using ExitGames.Client.Photon;
 
 namespace Game.Network
 {
@@ -122,6 +123,8 @@ namespace Game.Network
             Client.AddCallbackTarget(GetComponent<ConnectionEventListener>());
             Client.AddCallbackTarget(GetComponent<LobbyEventListener>());
             Client.AddCallbackTarget(GetComponent<RoomEventListener>());
+
+            PhotonPeer.RegisterType(typeof(Vector3), 1, CustomClasses.SerializeVector3, CustomClasses.DeserializeVector3);
         }
 
         void OnDestroy()
