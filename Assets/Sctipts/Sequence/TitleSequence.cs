@@ -19,7 +19,13 @@ namespace Game.Sequence
             ConnectionEventListener.Instance.Connected
                 .Subscribe((_) =>
                 {
-                    Debug.Log("ここで次のシーンへ");
+                    ServerConnection.Instance.JoinLobby();
+                });
+
+            LobbyEventListener.Instance.RoomListUpdate
+                .Subscribe((Rooms) =>
+                {
+                    Debug.Log("RoomCount:" + Rooms.Count);
                 });
 
             UIManager.Instance.Show<TitleScreen>("TitleScreen");

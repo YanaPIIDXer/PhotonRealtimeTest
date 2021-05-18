@@ -31,7 +31,7 @@ namespace Game.UI.Component
                 {
                     StartButton.interactable = false;
                     ServerConnection.Instance.Connect();
-                });
+                }).AddTo(gameObject);
         }
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 using Game.System;
 using Photon.Realtime;
 using Game.Enviroment;
+using UniRx;
+using System;
 
 namespace Game.Network
 {
@@ -62,6 +64,14 @@ namespace Game.Network
             {
                 Debug.LogError("Connection Failed.");
             }
+        }
+
+        /// <summary>
+        /// ロビーに入る
+        /// </summary>
+        public void JoinLobby()
+        {
+            Client.OpJoinLobby(TypedLobby.Default);
         }
 
         void Awake()
