@@ -10,17 +10,10 @@ namespace Game.Player
     public abstract class PlayerComponent
     {
         /// <summary>
-        /// 所有者
-        /// </summary>
-        private PlayerCharacter Owner = null;
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="Onwer">所有者</param>
-        public PlayerComponent(PlayerCharacter Owner)
+        public PlayerComponent()
         {
-            this.Owner = Owner;
         }
 
         /// <summary>
