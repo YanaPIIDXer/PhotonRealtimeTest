@@ -85,7 +85,8 @@ namespace Game.Sequence
                     throw new Exception("Invalid Packet Code:" + Data.Code);
             }
 
-            DictionaryStreamReader Reader = new DictionaryStreamReader((Dictionary<byte, object>)Data.CustomData);
+            var Dic = (Dictionary<byte, object>)Data.CustomData;
+            DictionaryStreamReader Reader = new DictionaryStreamReader(Dic);
             Packet.Serialize(Reader);
 
             Vector3 Position = new Vector3();
