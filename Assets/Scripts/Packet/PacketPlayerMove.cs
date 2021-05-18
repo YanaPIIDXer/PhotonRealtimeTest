@@ -7,11 +7,6 @@ namespace Game.Packet
 	{
 		
 
-		/// <summary>
-		///  座標
-		/// </summary>
-		public Vec3 Position = new Vec3();
-
 		
 
 		public EPacketID PacketID { get { return EPacketID.PlayerMove; } }
@@ -20,15 +15,10 @@ namespace Game.Packet
 		{
 		}
 
-		public PacketPlayerMove(Vec3 Position)
-		{
-			this.Position = Position;
-			
-		}
+		
 
 		public bool Serialize(IStream Stream)
 		{
-			Position.Serialize(Stream);
 			
 			return true;
 		}
