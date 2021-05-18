@@ -7,6 +7,9 @@ using System;
 
 namespace Game.Network
 {
+    /// <summary>
+    /// 接続イベントリスナ
+    /// </summary>
     public class ConnectionEventListener : MonoBehaviour, IConnectionCallbacks
     {
         /// <summary>
