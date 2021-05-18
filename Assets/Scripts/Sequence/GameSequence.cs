@@ -6,6 +6,8 @@ using UniRx;
 using System;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using Game.UI;
+using Game.UI.Component;
 
 namespace Game.Sequence
 {
@@ -21,6 +23,9 @@ namespace Game.Sequence
         void Awake()
         {
             Game.Network.ServerConnection.Instance.RegisterCallbackTarget(this);
+
+            var Handler = UIManager.Instance.Show<GameHUD>("GameHUD");
+            Handler.Instance.Inputs.Move.Subscribe((Value) => Debug.Log(Value.ToString()));
         }
 
         void OnDestroy()
