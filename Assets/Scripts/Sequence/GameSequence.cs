@@ -20,6 +20,7 @@ namespace Game.Sequence
     {
         public void OnEvent(EventData photonEvent)
         {
+            Debug.Log("OnEvent Code:" + photonEvent.Code);
         }
 
         void Awake()

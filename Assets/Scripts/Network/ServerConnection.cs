@@ -7,6 +7,8 @@ using Game.Enviroment;
 using UniRx;
 using System;
 using ExitGames.Client.Photon;
+using Game.Packet;
+using Game.Stream;
 
 namespace Game.Network
 {
@@ -97,6 +99,19 @@ namespace Game.Network
             EnterRoomParams Params = new EnterRoomParams();
             Params.RoomName = RoomName;
             Client.OpJoinRoom(Params);
+        }
+
+        /// <summary>
+        /// パケット送信
+        /// </summary>
+        /// <param name="PlayerPosition">現在座標</param>
+        /// <param name="Packet">送信するパケット</param>
+        public void SendPacket(Vector3 PlayerPosition, IPacket Packet)
+        {
+            DictionaryStreamWriter Writer = new DictionaryStreamWriter();
+            Packet.Serialize(Writer);
+            Writer.Dest.Add((byte)(Writer.Dest.Count + 1), PlayerPosition);
+            Client.OpRaiseEvent((byte)Packet.PacketID, Writer.Dest, new RaiseEventOptions(), new SendOptions());
         }
 
         /// <summary>
