@@ -29,7 +29,7 @@ namespace NativePacketGenerator
 
             IDEnumGenerator IDGen = new IDEnumGenerator(Classes);
             if (!IDGen.Generate(0, "PacketID")) { return; }
-            string SrcPath = "../Common/Sources/Packet/";
+            string SrcPath = "../Assets/Scripts/Packet/";
             if (!IDGen.Write(SrcPath + "PacketID.cs")) { return; }
 
             foreach (var Class in Classes)
@@ -47,13 +47,6 @@ namespace NativePacketGenerator
                     Console.WriteLine("ソースコード書き込みに失敗しました。");
                     return;
                 }
-            }
-
-            RegisterGenerator RegisterGen = new RegisterGenerator(Classes);
-            if (!RegisterGen.Generate())
-            {
-                Console.WriteLine("カスタムクラスレジスタのソースコード生成に失敗しました。");
-                return;
             }
         }
     }

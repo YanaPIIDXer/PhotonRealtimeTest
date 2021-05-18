@@ -103,7 +103,6 @@ namespace NativePacketGenerator
                 {
                     Writer.Write(Result);
                 }
-
             }
             catch (Exception e)
             {

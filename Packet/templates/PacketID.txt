@@ -1,4 +1,4 @@
-namespace Common.Packet
+namespace Game.Packet
 {
     public enum EPacketID
     {
